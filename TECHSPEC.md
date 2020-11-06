@@ -1,0 +1,158 @@
+
+# RECEIPT GENERATOR v1.0 #
+
+# Overview
+A Command Line Application for printing receipts to Terminal 
+
+# Glossary
+- CLI - Command Line Application 
+- [Canvas](https://www.npmjs.com/package/canvas) - Node module for drawing graphics via JS & the HTML canvas element. Implementation of the [Web Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API), as closely as possible.
+
+# Product requirements: 
+- 1. We will pass a JSON object for the business information: logo, name, address, VAT no., optional telephone no. & website  
+- 2. We will pass a JSON object for the order information with:
+    - information for each item: description, quantity, value
+    - payment information: if cash - the amount paid, if card - card type, card number, expiry date
+- 3. The CLI will take other command line parameters:
+    - currency (GBP (default), EUR, USD)
+    - language (English (default), German, Chinese) 
+     - optional bottom message (defaults to none)
+      
+TODO: To change the language, we need to provide switch case options for descriptive text and subtitles. Is there another option? 
+- 4. The first layer of the application will validate the input. The second layer will reformat the data and create the image via canvas. 
+
+
+<figure>
+    <img src="./images/layout.jpg" alt="drawing" width="200"/>
+    <figcaption>Layout Mockup in Indesign </figcaption>
+</figure>
+
+
+# Technical requirements: 
+
+Validation of Business Information (JSON object):
+- Logo - README guide should say for best results, this image should be square. 
+- Name - Should not exceed 20 chars 
+- Address Line 1 - Number max 5 digits / Street,%City should not exceed 48 chars. 
+- Addres Line 2 - Country should not exceed 47 digits / UK Postcode max 6 digits. 
+
+// TODO: Check if we can call an API to check its a valid country and postcode? 
+- VAT no. - 9 digits. Contains only digits, except first 2 elements are GB. 
+- Telephone number (Optional): 10 or 11 digits. Contains only digits. 
+- Website (Optional): Max 48 chars. Must contain 'www.' and '.com' or '.co.uk'
+- Message (Optional): Max 30 chars. 
+
+// TODO: Check if we can check its a valid website?
+
+Eg:
+```javascript
+Business: 
+{
+    Logo: "stringUrl"
+    Name:  "string"
+    Address1: 
+        {
+        number: "string",
+        street: "string",
+        city: "string",
+        }
+    Address2: "string"
+    VAT: "string"
+    Tel: number
+    Web: "stringUrl" 
+}
+```
+
+Reformatting of Business Information:
+- Logo - To be resized to 120px x 120px. Centre-aligned. 
+- Name - Mapped to CompanyTitle at 36pt Menlo. Centre-aligned. 
+- Address Line 1 - Mapped to AddressLine1 at 14pt Menlo: Number, Street, City. Centre-aligned. 
+- Addres Line 2 - Mapped to AddressLine1 at 14pt Menlo: Country, XXX XXX. Postcode formatted with space after first 3 digits. Centre-aligned. 
+- VAT no. - Mapped to VATno. Centre-aligned.
+- Tel (Optional): If provided, mapped to Tel at 14pt Menlo. Prefix +44, formatted with spaces after 4 digits, and then after the next 3.   
+- Website (Optional): If provided, mapped to Web at 14pt Menlo. Centre-aligned.
+- Custom Message (Optional): If provided, mapped to Web at 24pt Menlo. Centre-aligned. 
+
+Draw all mandatory Business Information on canvas as a set block of text, [wrapped](https://www.html5canvastutorials.com/tutorials/html5-canvas-wrap-text-tutorial/) and centre-aligned. 
+Draw the optional elements: Tel & Web & Custom information seperately. 
+We calculate at this point the total height of the Business Information. This determines the basepoints of the Order information. 
+
+Validation of Order Information (JSON object):
+- Description 
+- Quantity - < 100
+- Value - < 1000.
+- Payment type
+    - CARD - Number: max length of 16 digits / Expiry: 5 digits. First two digits should be later than this month. Last two digits should be 19+. 
+    - CASH - <10000. 
+
+```javascript
+Order: 
+    {
+        Items: 
+        // TODO: check if this is a good idea to contain objects here in an array? 
+            [ 
+                {
+                    ID: number 
+                    Description: "string"
+                    Quantity: number 
+                    Value: number 
+                };
+                ...
+            ]
+        Payment:
+            {
+                Type: "string"
+                Cash: number 
+                CardNo: number
+                CardExp: "string"
+            }
+    }
+}
+```
+
+Formatting of Order Information:
+- Description - Truncate to 19 chars. Add spaces until total length is 20 chars.
+- Quantity - If single digit, prefix with space. 
+- Value - Formatted to 2dp even if integer. If <10, prefix with a space. XX.XX or %X.XX. 
+- Item subtotal (calculate) - Quantity x Value. Formatted to 2dp. <1000. If <100, prefix with a space. %XX.XX or XXX.XX. 
+
+Info for each Item to be concatenated: 
+Description[20] + 'X'[1] + Quantity[2] +  space[5] + '@' + space[2] + Value[5] + space[1] + currency[3] + space[3] + subtotal[6]. 
+Eg: 
+```javascript  
+const item1 = "VEG_DUMPLINGS_______" + "X"+ "10" + "_____" + "@" + "__" + "_6.99" + "_" + "GBP" + "___" + "_69.90";
+
+// "VEG_DUMPLINGS_______X10_____@___6.99_GBP____69.90"
+```
+Check: this should yield a line of 49 chars - entire line is 53 chars. 
+
+- Quantity total (calculate): Quantities added together. 
+- Grand Total (calculate): Subtotals added together. Formatted to 2dp.
+
+Draw all Order Items on canvas as a set block of text, wrapped and left-aligned. 
+We draw the Total text & figure seperately as these have different horizontal basepoints on the canvas. 
+We calculate at this point the height of the Order Items Information as this determines the baseline pt for Payment Information.  
+
+- Payment type
+    - CARD - Concatenate card details and map into cardDetails. 
+    - CASH - Format to 2dp. If <100, prefix with a space to form 6 digits. Check that this is more than the Grand Total. 
+    - CHANGE (calculate) - Grand Total - Cash. Format to 2dp. If <100, prefix with a space to form 6 digits. 
+
+Draw all Payment Items on canvas as a set block of text, wrapped and left-aligned. 
+We calculate at this point the height of the Order Items Information as this determines the baseline pt for Date/Time & Optional Message. 
+
+- Date & Time - Map to 14pt Menlo. Centre-aligned. 
+- Optional Message - if provided, 30 chars max. Map to 24pt Menlo. Centre-aligned. 
+
+TODO: How to [timestamp](https://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript) for Date/Time accurate to seconds 
+Draw remaining Items on canvas as a set block of text, wrapped and centre-aligned. 
+
+# Future Goals
+Deploy as a node module to npm 
+
+# Test Plan
+Unit tests for validation functions. 
+Use end-to-end tests using a shell script to create receipts for all use cases. 
+For example, invalid data, with/without optional information, minimum & maximum information. 
+
+<img src="./images/eg.png" alt="reference" width="200"/>
