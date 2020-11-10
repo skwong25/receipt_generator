@@ -6,75 +6,63 @@ A Command Line Application for printing receipts to Terminal
 
 # Glossary
 - CLI - Command Line Application 
-- [Canvas](https://www.npmjs.com/package/canvas) - Node module for drawing graphics via JS & the HTML canvas element. Implementation of the [Web Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API), as closely as possible.
+- [Canvas](https://www.npmjs.com/package/canvas) - Node module for drawing graphics via JS & the HTML canvas element. Implementation of the [Web Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API), as closely as possible. 
+- [i18n](https://www.npmjs.com/package/i18n) - Lightweight translation module.
 
 # Product requirements: 
-- 1. We will pass a JSON object for the business information: logo, name, address, VAT no., optional telephone no. & website  
-- 2. We will pass a JSON object for the order information with:
+- 1. We will pass a JSON object for the order information with:
     - information for each item: description, quantity, value
     - payment information: if cash - the amount paid, if card - card type, card number, expiry date
+- 2. We will pass Business information as individual command line arguments: mandatory: logo, name, address, VAT no. & optional: telephone no. & website  
 - 3. The CLI will take other command line parameters:
     - currency (GBP (default), EUR, USD)
-    - language (English (default), German, Chinese) 
+    - language (English (default), German, Chinese). Guide [here](https://phrase.com/blog/posts/node-js-i18n-guide/#Adding_an_I18n_provider) 
      - optional bottom message (defaults to none)
-      
-TODO: To change the language, we need to provide switch case options for descriptive text and subtitles. Is there another option? 
+
 - 4. The first layer of the application will validate the input. The second layer will reformat the data and create the image via canvas. 
 
 
 <figure>
-    <img src="./images/layout.jpg" alt="drawing" width="200"/>
+    <img src="./images/layout.jpg" alt="drawing" width="400"/>
     <figcaption>Layout Mockup in Indesign </figcaption>
+</figure>
+
+<figure>
+    <img src="./images/layout_rev1.jpeg" alt="drawing" width="400"/>
+    <figcaption>Revised with new logo requirements & structure</figcaption>
+</figure>
+
+<figure>
+    <img src="./images/HTMLelements.png" alt="drawing" width="400"/>
+    <figcaption>Planning HTML elements </figcaption>
 </figure>
 
 
 # Technical requirements: 
 
-Validation of Business Information (JSON object):
-- Logo - README guide should say for best results, this image should be square. 
-- Name - Should not exceed 20 chars 
-- Address Line 1 - Number max 5 digits / Street,%City should not exceed 48 chars. 
-- Addres Line 2 - Country should not exceed 47 digits / UK Postcode max 6 digits. 
+Validation of Business Information:
+- Logo (--l, -logo) - README guide should say for best results, this image should be square. 
+- Name (--n, -name) - Should not exceed 20 chars 
+- Address Line 1 (--a, -address1) - Number, Street, City should not exceed 53 chars. 
+- Addres Line 2 (--b, -address2) - Country & UK Postcode should not exceed 53 chars.  
 
-// TODO: Check if we can call an API to check its a valid country and postcode? 
-- VAT no. - 9 digits. Contains only digits, except first 2 elements are GB. 
-- Telephone number (Optional): 10 or 11 digits. Contains only digits. 
-- Website (Optional): Max 48 chars. Must contain 'www.' and '.com' or '.co.uk'
-- Message (Optional): Max 30 chars. 
-
-// TODO: Check if we can check its a valid website?
-
-Eg:
-```javascript
-Business: 
-{
-    Logo: "stringUrl"
-    Name:  "string"
-    Address1: 
-        {
-        number: "string",
-        street: "string",
-        city: "string",
-        }
-    Address2: "string"
-    VAT: "string"
-    Tel: number
-    Web: "stringUrl" 
-}
-```
+- VAT no. (--v, -vat) - 9 digits. Contains only digits, except first 2 elements are GB. 
+- Telephone number (Optional) (--t, -tel) : 10 or 11 digits. Contains only digits. 
+- Website (Optional) (--w, -website) : Max 48 chars. Must contain 'www.' and '.com' or '.co.uk'
+- Message (Optional) (--tm, -topmessage): Max 30 chars. 
 
 Reformatting of Business Information:
-- Logo - To be resized to 120px x 120px. Centre-aligned. 
+- Logo - To be resized to fit (centre-aligned) within logo container of 448 x 120px. See [here](https://codepo8.github.io/canvas-images-and-pixels/index.html) for image manipulation using HTML canvas element. 
 - Name - Mapped to CompanyTitle at 36pt Menlo. Centre-aligned. 
-- Address Line 1 - Mapped to AddressLine1 at 14pt Menlo: Number, Street, City. Centre-aligned. 
-- Addres Line 2 - Mapped to AddressLine1 at 14pt Menlo: Country, XXX XXX. Postcode formatted with space after first 3 digits. Centre-aligned. 
-- VAT no. - Mapped to VATno. Centre-aligned.
-- Tel (Optional): If provided, mapped to Tel at 14pt Menlo. Prefix +44, formatted with spaces after 4 digits, and then after the next 3.   
-- Website (Optional): If provided, mapped to Web at 14pt Menlo. Centre-aligned.
+- Address Line 1 - Mapped to BusinessInfo at 14pt Menlo: Number, Street, City. Centre-aligned. 
+- Address Line 2 - Mapped to BusinessInfo 14pt Menlo: Country, XXX XXX. Postcode formatted with space after first 3 digits. Centre-aligned. 
+- VAT no. - Mapped to BusinessInfo no. Centre-aligned.
+- Tel (Optional): If provided, mapped to BusinessInfo at 14pt Menlo. Prefix +44, formatted with spaces after 4 digits, and then after the next 3.   
+- Website (Optional): If provided, mapped to BusinessInfo at 14pt Menlo. Centre-aligned.
 - Custom Message (Optional): If provided, mapped to Web at 24pt Menlo. Centre-aligned. 
 
-Draw all mandatory Business Information on canvas as a set block of text, [wrapped](https://www.html5canvastutorials.com/tutorials/html5-canvas-wrap-text-tutorial/) and centre-aligned. 
-Draw the optional elements: Tel & Web & Custom information seperately. 
+Draw the Business Information elements on canvas - seperate elements for the text of separate sizes, [wrapped](https://www.html5canvastutorials.com/tutorials/html5-canvas-wrap-text-tutorial/) and centre-aligned. 
+
 We calculate at this point the total height of the Business Information. This determines the basepoints of the Order information. 
 
 Validation of Order Information (JSON object):

@@ -2,10 +2,20 @@
   "name": "receipt_maker",
   "version": "1.0.0",
   "description": "receipt maker",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
+    "start": "node src/app.js",
+    "langtest": "node src/lang-test.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "receipt": "src/app.js"
+  },
   "author": "Suzanna Kwong",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "i18n": "^0.13.2",
+    "yargs": "^16.1.0"
+  }
 }
