@@ -52,6 +52,7 @@ validate("vat");
 validate("telephone");
 validate("website");
 validate("topMessage", 30);
+// we could iterate through an array of each argument with forEach() 
 
 // resize logo
 // gets original dimensions of image
@@ -60,7 +61,7 @@ let oHeight;
 
 const img = new canvas.Image();
 // TODO: check if this is async
-img.onload = function() {
+img.onload = function () {
   oWidth = this.width
   oHeight = this.height;
 }
@@ -70,7 +71,7 @@ img.src = options.image;
 const logoWidth = 448;
 const logoHeight = 120;
 
-function diff (a,b) {
+function diff(a,b) {
   return Math.abs(a-b);
 }
 
@@ -86,7 +87,9 @@ const determineScale = () => {
 }
 let scale = determineScale(); 
 const newWidth = oWidth * scale 
+console.log("newWidth: " + newWidth);
 const newHeight = oHeight * scale 
+console.log("newHeight: " + newHeight);
 
 
 // format business info
