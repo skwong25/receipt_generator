@@ -1,0 +1,20 @@
+{
+    "items": { 
+            "1": {
+                "id": 1, 
+                "description": "jade dumpling",
+                "quantity": 1,
+                "value": 3.99
+            },
+            "2": {
+                "id": 2, 
+                "description": "dipping sauce",
+                "quantity": 1,
+                "value": 1.99
+            }
+        },        
+    "payment" : {
+            "type": "cash", 
+            "paid": 10.00 
+        }
+}

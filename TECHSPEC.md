@@ -41,7 +41,7 @@ A Command Line Application for printing receipts to Terminal
 # Technical requirements: 
 
 Validation of Business Information:
-- Logo (--l, -logo) - README guide should say for best results, this image should be square. 
+- Logo (--i, -image) - README guide should say for best results, this image should be square. 
 - Name (--n, -name) - Should not exceed 20 chars 
 - Address Line 1 (--a, -address1) - Number, Street, City should not exceed 53 chars. 
 - Addres Line 2 (--b, -address2) - Country & UK Postcode should not exceed 53 chars.  
@@ -49,10 +49,10 @@ Validation of Business Information:
 - VAT no. (--v, -vat) - 9 digits. Contains only digits, except first 2 elements are GB. 
 - Telephone number (Optional) (--t, -tel) : 10 or 11 digits. Contains only digits. 
 - Website (Optional) (--w, -website) : Max 48 chars. Must contain 'www.' and '.com' or '.co.uk'
-- Message (Optional) (--tm, -topmessage): Max 30 chars. 
+- Message (Optional) (--t, -topmessage): Max 30 chars. 
 
 Reformatting of Business Information:
-- Logo - To be resized to fit (centre-aligned) within logo container of 448 x 120px. See [here](https://codepo8.github.io/canvas-images-and-pixels/index.html) for image manipulation using HTML canvas element. 
+- Image - To be resized to fit (centre-aligned) within logo container of 448 x 120px. See [here](https://codepo8.github.io/canvas-images-and-pixels/index.html) for image manipulation using HTML canvas element. 
 - Name - Mapped to CompanyTitle at 36pt Menlo. Centre-aligned. 
 - Address Line 1 - Mapped to BusinessInfo at 14pt Menlo: Number, Street, City. Centre-aligned. 
 - Address Line 2 - Mapped to BusinessInfo 14pt Menlo: Country, XXX XXX. Postcode formatted with space after first 3 digits. Centre-aligned. 
@@ -70,7 +70,7 @@ Validation of Order Information (JSON object):
 - Quantity - < 100
 - Value - < 1000.
 - Payment type
-    - CARD - Number: max length of 16 digits / Expiry: 5 digits. First two digits should be later than this month. Last two digits should be 19+. 
+    - CARD - Number: max length of 16 digits / Expiry: 5 digits. // Look into timestamp UNIX  
     - CASH - <10000. 
 
 ```javascript
@@ -95,7 +95,6 @@ Order:
                 CardExp: "string"
             }
     }
-}
 ```
 
 Formatting of Order Information:
