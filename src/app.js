@@ -93,7 +93,7 @@ const drawLogo = async function (url) {
       let x = centrepoint - (logoSize.width/2);
       context.drawImage(image, x, y, logoSize.width, logoSize.height); 
       const buffer = mainCanvas.toBuffer('image/png'); // creates buffer object representing image in the canvas 
-      fs.writeFileSync('./image.png', buffer); // fs.writeFileSync(file, data, options) creates a new file if the specified file does not exist. 
+      fs.writeFileSync('./receipt.png', buffer); // fs.writeFileSync(file, data, options) creates a new file if the specified file does not exist. 
       y = y + logoContainerHeight + maxSpacing; 
       return y; 
   })
