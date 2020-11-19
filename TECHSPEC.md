@@ -27,16 +27,18 @@ A Command Line Application for printing receipts to Terminal
     <figcaption>Layout Mockup in Indesign </figcaption>
 </figure>
 
-<figure>
-    <img src="./images/layout_rev1.jpeg" alt="drawing" width="400"/>
-    <figcaption>Revised with new logo requirements & structure</figcaption>
-</figure>
-
-<figure>
-    <img src="./images/HTMLelements.png" alt="drawing" width="400"/>
-    <figcaption>Planning HTML elements </figcaption>
-</figure>
-
+<table>
+  <tr>
+    <td>Revised structure</td>
+     <td>Planning elements</td>
+     <td>Final image</td>
+  </tr>
+  <tr>
+    <td><img src="./images/layout_rev1.jpeg" alt="drawing" width="200"/></td>
+    <td> <img src="./images/HTMLelements.png" alt="drawing" width="200"/></td>
+    <td> <img src="./images/receipt.png" alt="drawing" width="300"/></td>
+  </tr>
+ </table>
 
 # Technical requirements: 
 
@@ -134,12 +136,18 @@ We calculate at this point the height of the Order Items Information as this det
 TODO: How to [timestamp](https://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript) for Date/Time accurate to seconds 
 Draw remaining Items on canvas as a set block of text, wrapped and centre-aligned. 
 
+
+<figure>
+    <img src="./images/trello.png" alt="reference" width="400"/>
+    <figcaption>Use of Kanban boards in project planning and management</figcaption>
+</figure>
+
 # Future Goals
-Deploy as a node module to npm 
+Deploy as a node module to npmjs
 
 # Test Plan
 Unit tests for validation functions. 
 Use end-to-end tests using a shell script to create receipts for all use cases. 
 For example, invalid data, with/without optional information, minimum & maximum information. 
 
-<img src="./images/eg.png" alt="reference" width="200"/>
+

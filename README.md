@@ -80,7 +80,7 @@ There are 3 x classes to support separation of concerns:
 
 Classes are instantiated in the main server file. Class methods are called to validate and reformat the data passed. 
 
-The data is drawn to canvas and written to file. The canvas is sized dynamically and varies depending on the amount of optional information provided. 
+The data is drawn to canvas in text/image elements and written to file. The canvas is sized dynamically and varies depending on the amount of optional information provided. 
 
 The printer has a fixed width of 568 pixels and a margin of 10% on either side.
 
@@ -99,6 +99,17 @@ The final receipt image displays:
 - Date & time stamp, accurate to seconds 
 
 Use of **Continuous Integration** allows for build and automated testing upon git commit. 
+
+<table>
+  <tr>
+    <td>Initial Mockup of Layout</td>
+     <td>Structure of Elements</td>
+  </tr>
+  <tr>
+    <td><img src="./images/layout.jpg" alt="drawing" width="300"/></td>
+    <td> <img src="./images/HTMLelements.png" alt="drawing" width="400"/></td>
+  </tr>
+ </table>
 
 ## How To Test
 
