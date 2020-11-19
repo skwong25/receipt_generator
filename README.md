@@ -113,7 +113,7 @@ Use of **Continuous Integration** allows for build and automated testing upon gi
 
 ## How To Test
 
-- Run `npm run endtoendtest` in Terminal.
+- Run `npm run e2e` in Terminal.
 
 The above runs a shell script for an end to end test as set out in the package.json file. 
 
