@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/app.js",
     "langtest": "node src/lang-test.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "e2e": "node src/app.js -o '../src/order_example.json' -n 'The Jade Dumpling' -a '3, Overlinks Road, Beswick' -d 'United Kingdom M11 3DD' -v GB1234567 -b '** THANKYOU **' -i images/close_enough.jpg -p '0161 456 0972' -w 'www.thejadedumpling.co.uk' -t '** GYOZA TO GYO **' ",
+    "test": "npm run langtest"
   },
   "bin": {
     "receipt": "src/app.js"
