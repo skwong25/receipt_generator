@@ -1,17 +1,19 @@
 
 # Receipt Generator #
 
-# A CLI to generate receipts
+# A CLI for generating receipt imagery as PNGs
 
-A command line tool capable of generating a receipt for any shop. Generates a PNG image of a receipt. The tool accepts order information as a JSON string. The tool provides a --help option which provides concise documentation on how to use it. 
+A command line tool used for generating customer receipts as PNGs, intended to be customizable for any shop. The tool accepts information about a customer's purchase as a JSON string and prints it using the [Canvas node module](https://github.com/Automattic/node-canvas). The generated receipt looks like the following:
+
+
+![receipt](./receipt.png)
 
 ## Getting Started 
 
 If npm is not yet installed (run 'npm -v' in Terminal to check), run 'npm install' to install. 
-Run 'npm start' on Terminal to start the server. 
 
-See section [How To Use](#how-to-use) to begin sending http requests. 
-See section [Tests](#how-to-test) for how to run test suites. 
+See section [How To Use](#how-to-use). 
+See section [Tests](#how-to-test). 
 
 # Motivation
 
@@ -47,9 +49,7 @@ The following command line arguments are optional:
 
 Run '--help' in Terminal to display options, aliases, accepted data type and descriptions with restrictions. 
 
-2. The CLI will process the passed information and generate a receipt image and save it in the root directory to receipt.png by default. 
-
-![receipt](./receipt.png)
+2. The CLI will process the passed information and generate a receipt image and save it in the working directory to receipt.png by default. The file location is configurable. 
 
 ## Code Style
 
@@ -78,7 +78,7 @@ There are 3 x classes to support separation of concerns:
     - cash payment: calculates the amount of change in the chosen currency 
     - card payment: generates a unique transaction id 
 
-Classes are instantiated in the main server file. Class methods are called to validate and reformat the data passed. 
+Classes are instantiated in the main app.js file. Class methods are called to validate and reformat the data passed. 
 
 The data is drawn to canvas in text/image elements and written to file. The canvas is sized dynamically and varies depending on the amount of optional information provided. 
 

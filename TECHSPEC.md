@@ -4,24 +4,6 @@
 # Overview
 A Command Line Application for printing receipts to Terminal 
 
-# Glossary
-- CLI - Command Line Application 
-- [Canvas](https://www.npmjs.com/package/canvas) - Node module for drawing graphics via JS & the HTML canvas element. Implementation of the [Web Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API), as closely as possible. 
-- [i18n](https://www.npmjs.com/package/i18n) - Lightweight translation module.
-
-# Product requirements: 
-- 1. We will pass a JSON object for the order information with:
-    - information for each item: description, quantity, value
-    - payment information: if cash - the amount paid, if card - card type, card number, expiry date
-- 2. We will pass Business information as individual command line arguments: mandatory: logo, name, address, VAT no. & optional: telephone no. & website  
-- 3. The CLI will take other command line parameters:
-    - currency (GBP (default), EUR, USD)
-    - language (English (default), German, Chinese). Guide [here](https://phrase.com/blog/posts/node-js-i18n-guide/#Adding_an_I18n_provider) 
-     - optional bottom message (defaults to none)
-
-- 4. The first layer of the application will validate the input. The second layer will reformat the data and create the image via canvas. 
-
-
 <figure>
     <img src="./images/layout.jpg" alt="drawing" width="400"/>
     <figcaption>Layout Mockup in Indesign </figcaption>
@@ -39,6 +21,23 @@ A Command Line Application for printing receipts to Terminal
     <td> <img src="./images/receipt.png" alt="drawing" width="300"/></td>
   </tr>
  </table>
+
+# Glossary
+- CLI - Command Line Application 
+- [Canvas](https://www.npmjs.com/package/canvas) - Node module for drawing graphics via JS & the HTML canvas element. Implementation of the [Web Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API), as closely as possible. 
+- [i18n](https://www.npmjs.com/package/i18n) - Lightweight translation module.
+
+# Product requirements: 
+- 1. We will pass a JSON object for the order information with:
+    - information for each item: description, quantity, value
+    - payment information: if cash - the amount paid, if card - card type, card number, expiry date
+- 2. We will pass Business information as individual command line arguments: mandatory: logo, name, address, VAT no. & optional: telephone no. & website  
+- 3. The CLI will take other command line parameters:
+    - currency (GBP (default), EUR, USD)
+    - language (English (default), German, Chinese). Guide [here](https://phrase.com/blog/posts/node-js-i18n-guide/#Adding_an_I18n_provider) 
+     - optional bottom message (defaults to none)
+
+- 4. The first layer of the application will validate the input. The second layer will reformat the data and create the image via canvas. 
 
 # Technical requirements: 
 
