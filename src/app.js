@@ -176,7 +176,7 @@ const drawImage = async function () {
   const mainCanvas = canvas.createCanvas(canvasWidth, canvasHeight,'png');
   const context = mainCanvas.getContext('2d');  // getContext() allows us access to the canvas tags 2D drawing functions 
   context.fillStyle = '#ffffff' // hexadecimal colour code (white) 
-  context.fillRect(0, 0, 568, 2000)
+  context.fillRect(0, 0, canvasWidth, 2000)
 
   // draw logo to canvas
   try { 
@@ -219,14 +219,14 @@ const drawImage = async function () {
   context.fillText(values, centrepoint + 100, y); 
 
   // draw totals column
-  context.fillText(totals, 568 - margin, y + (2 * linebreak));
+  context.fillText(totals, canvasWidth - margin, y + (2 * linebreak));
   y = y + itemsHeight - midSpacing - (2 * linebreak) - ( 2 * dottedLineBreak); 
 
   // draw grand total
   const miniLine = "----\r\n";
   context.font = 'bold 24pt Menlo'
   context.textAlign = 'left'
-  context.fillText(miniLine + grandTotal, 568 - (2 * margin), y);
+  context.fillText(miniLine + grandTotal, canvasWidth - (2 * margin), y);
   y = y + midSpacing + dottedLineBreak; 
 
   y = drawDottedLine(context, y);
