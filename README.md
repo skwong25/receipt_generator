@@ -3,7 +3,10 @@
 
 # A CLI for generating receipt imagery as PNGs
 
-A command line tool capable of generating a receipt for any shop. Generates a PNG image of a receipt. The tool accepts order information as a JSON string. The tool provides a --help option which provides concise documentation on how to use it. 
+A command line tool used for generating customer receipts as PNGs, intended to be customizable for any shop. The tool accepts information about a customer's purchase as a JSON string and prints it using the [Canvas node module](https://github.com/Automattic/node-canvas). The generated receipt looks like the following:
+
+
+![receipt](./receipt.png)
 
 ## Getting Started 
 
@@ -47,8 +50,6 @@ The following command line arguments are optional:
 Run '--help' in Terminal to display options, aliases, accepted data type and descriptions with restrictions. 
 
 2. The CLI will process the passed information and generate a receipt image and save it in the working directory to receipt.png by default. The file location is configurable. 
-
-![receipt](./receipt.png)
 
 ## Code Style
 
